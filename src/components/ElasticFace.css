@@ -1,10 +1,167 @@
 .elastic-face-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 60vh;
+  height: 80vh;
   perspective: 1000px;
+  gap: 20px;
+}
+
+/* Mood Selector Styles */
+.mood-selector {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.mood-selector h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.mood-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.mood-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 20px;
+  background: linear-gradient(145deg, #f0f0f0, #ffffff);
+  border: 2px solid #e0e0e0;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  min-width: 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.mood-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  border-color: #ccc;
+}
+
+.mood-button.active {
+  background: linear-gradient(145deg, #4CAF50, #45a049);
+  border-color: #4CAF50;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+}
+
+.mood-button.active .mood-name {
+  color: white;
+}
+
+.mood-emoji {
+  font-size: 2rem;
+  margin-bottom: 5px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.mood-button:hover .mood-emoji {
+  transform: scale(1.2);
+}
+
+.mood-button.active .mood-emoji {
+  animation: bounce 0.6s ease;
+}
+
+.mood-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+/* Physics Controls Styles */
+.physics-controls {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.physics-controls h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.physics-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.physics-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 16px;
+  background: linear-gradient(145deg, #e8f4f8, #d1ecf1);
+  border: 2px solid #b3d9e0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+  min-width: 70px;
+  position: relative;
+  overflow: hidden;
+}
+
+.physics-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.12);
+  border-color: #87ceeb;
+  background: linear-gradient(145deg, #daf0f7, #c4e3ea);
+}
+
+.physics-button.active {
+  background: linear-gradient(145deg, #FF6B6B, #FF5252);
+  border-color: #FF6B6B;
+  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+}
+
+.physics-button.active .physics-name {
+  color: white;
+}
+
+.physics-button.active .physics-icon {
+  animation: physics-pulse 1s ease-in-out infinite;
+}
+
+.physics-icon {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.physics-button:hover .physics-icon {
+  transform: scale(1.15);
+}
+
+.physics-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
+  transition: color 0.3s ease;
 }
 
 .elastic-face-svg {
@@ -14,6 +171,27 @@
   height: 80vmin;
   filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
   transform-style: preserve-3d;
+  transition: all 0.3s ease;
+}
+
+/* Mood-specific face styling */
+.elastic-face-svg.mood-happy {
+  filter: drop-shadow(0 10px 30px rgba(255, 217, 61, 0.4));
+}
+
+.elastic-face-svg.mood-surprised {
+  filter: drop-shadow(0 10px 30px rgba(255, 229, 92, 0.4));
+  animation: surprise-shake 0.5s ease-out;
+}
+
+.elastic-face-svg.mood-sleepy {
+  filter: drop-shadow(0 10px 30px rgba(230, 215, 255, 0.4));
+  animation: sleepy-sway 3s ease-in-out infinite;
+}
+
+.elastic-face-svg.mood-angry {
+  filter: drop-shadow(0 10px 30px rgba(255, 107, 107, 0.4));
+  animation: angry-vibrate 0.3s ease-in-out;
 }
 
 .face-element {
@@ -40,12 +218,43 @@
   filter: drop-shadow(0 5px 15px rgba(255, 165, 0, 0.4));
 }
 
+/* Mood-specific face element styling */
+.face.happy {
+  animation: happy-glow 2s ease-in-out infinite alternate;
+}
+
+.face.surprised {
+  animation: surprise-pulse 0.5s ease-out;
+}
+
+.face.sleepy {
+  opacity: 0.9;
+  animation: sleepy-fade 4s ease-in-out infinite;
+}
+
+.face.angry {
+  animation: angry-glow 1s ease-in-out infinite alternate;
+}
+
 .leftEye, .rightEye {
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
 }
 
 .leftEye:hover, .rightEye:hover {
   filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2)) brightness(1.1);
+}
+
+/* Eye-specific mood animations */
+.leftEye.surprised, .rightEye.surprised {
+  animation: eye-wide 0.3s ease-out;
+}
+
+.leftEye.sleepy, .rightEye.sleepy {
+  animation: eye-droop 3s ease-in-out infinite;
+}
+
+.leftEye.angry, .rightEye.angry {
+  animation: eye-narrow 0.5s ease-out;
 }
 
 .nose {
@@ -56,29 +265,91 @@
   filter: drop-shadow(0 2px 5px rgba(255, 107, 66, 0.4));
 }
 
+/* Mouth-specific mood animations */
+.mouth.happy {
+  animation: mouth-smile 2s ease-in-out infinite;
+}
+
+.mouth.surprised {
+  animation: mouth-gasp 0.5s ease-out;
+}
+
+.mouth.angry {
+  animation: mouth-frown 1s ease-in-out infinite alternate;
+}
+
 .leftCheek, .rightCheek {
   filter: drop-shadow(0 2px 8px rgba(255, 179, 71, 0.3));
+}
+
+/* Cheek-specific mood styling */
+.leftCheek.happy, .rightCheek.happy {
+  animation: cheek-blush 2s ease-in-out infinite alternate;
+}
+
+.leftCheek.angry, .rightCheek.angry {
+  animation: cheek-flush 1s ease-in-out infinite alternate;
 }
 
 /* Responsive design */
 @media (max-width: 768px) {
   .elastic-face-container {
-    height: 50vh;
+    height: 60vh;
   }
   
   .elastic-face-svg {
     width: 90vmin;
     height: 90vmin;
   }
+  
+  .mood-buttons {
+    gap: 10px;
+  }
+  
+  .mood-button {
+    padding: 10px 15px;
+    min-width: 70px;
+  }
+  
+  .mood-emoji {
+    font-size: 1.5rem;
+  }
+  
+  .mood-name {
+    font-size: 0.8rem;
+  }
 }
 
 @media (max-width: 480px) {
   .elastic-face-container {
-    height: 45vh;
+    height: 55vh;
+  }
+  
+  .mood-buttons {
+    gap: 8px;
+  }
+  
+  .mood-button {
+    padding: 8px 12px;
+    min-width: 60px;
+  }
+  
+  .mood-emoji {
+    font-size: 1.3rem;
+  }
+  
+  .mood-name {
+    font-size: 0.7rem;
   }
 }
 
-/* Animation keyframes for extra effects */
+/* Animation keyframes */
+@keyframes bounce {
+  0%, 20%, 60%, 100% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-10px) scale(1.1); }
+  80% { transform: translateY(-5px) scale(1.05); }
+}
+
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
@@ -95,6 +366,88 @@
   100% { transform: rotate(0deg); }
 }
 
+/* Mood-specific animations */
+@keyframes happy-glow {
+  0% { filter: drop-shadow(0 5px 15px rgba(255, 217, 61, 0.4)); }
+  100% { filter: drop-shadow(0 5px 20px rgba(255, 217, 61, 0.8)); }
+}
+
+@keyframes surprise-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+@keyframes surprise-pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes sleepy-sway {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(2deg); }
+}
+
+@keyframes sleepy-fade {
+  0%, 100% { opacity: 0.9; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes angry-vibrate {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+
+@keyframes angry-glow {
+  0% { filter: drop-shadow(0 5px 15px rgba(255, 107, 107, 0.4)); }
+  100% { filter: drop-shadow(0 5px 20px rgba(255, 107, 107, 0.8)); }
+}
+
+@keyframes eye-wide {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes eye-droop {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(2px); }
+}
+
+@keyframes eye-narrow {
+  0% { transform: scaleY(1); }
+  50% { transform: scaleY(0.8); }
+  100% { transform: scaleY(1); }
+}
+
+@keyframes mouth-smile {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes mouth-gasp {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+@keyframes mouth-frown {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.1); }
+}
+
+@keyframes cheek-blush {
+  0% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+@keyframes cheek-flush {
+  0% { opacity: 0.9; }
+  100% { opacity: 1; }
+}
+
 /* Add subtle animations when not being dragged */
 .face-element:not(.animating):not(:active) {
   animation: pulse 4s ease-in-out infinite;
@@ -104,4 +457,253 @@
 .elastic-face-svg:hover {
   transform: scale(1.02);
   transition: transform 0.3s ease;
+}
+
+/* Particle Effects Styling */
+.particles-layer {
+  pointer-events: none;
+  overflow: visible;
+}
+
+.sparkle-particle {
+  filter: drop-shadow(0 0 3px currentColor);
+  animation: sparkle-twinkle 1s ease-out;
+}
+
+.pop-particle {
+  filter: drop-shadow(0 0 2px currentColor);
+  animation: pop-burst 0.6s ease-out;
+}
+
+.trail-particle {
+  filter: blur(0.5px) drop-shadow(0 0 2px currentColor);
+  animation: trail-fade 1s ease-out;
+}
+
+.confetti-particle {
+  filter: drop-shadow(0 0 1px currentColor);
+  animation: confetti-fall 2s ease-out;
+}
+
+/* Particle Animations */
+@keyframes sparkle-twinkle {
+  0% { 
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  20% { 
+    transform: scale(1.2) rotate(45deg);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(0.8) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes pop-burst {
+  0% { 
+    transform: scale(0);
+    opacity: 1;
+  }
+  30% { 
+    transform: scale(1.3);
+    opacity: 0.8;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes trail-fade {
+  0% { 
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+  100% { 
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes confetti-fall {
+  0% { 
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  100% { 
+    opacity: 0;
+    transform: scale(0.5) rotate(720deg);
+  }
+}
+
+/* Enhanced particle glow effects */
+@keyframes particle-glow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 2px currentColor);
+  }
+  50% { 
+    filter: drop-shadow(0 0 6px currentColor) drop-shadow(0 0 10px currentColor);
+  }
+}
+
+.sparkle-particle {
+  animation: sparkle-twinkle 1s ease-out, particle-glow 0.5s ease-in-out;
+}
+
+/* Rainbow trail effect */
+.trail-particle {
+  background: linear-gradient(45deg, 
+    #ff0000, #ff7f00, #ffff00, #00ff00, 
+    #0000ff, #4b0082, #9400d3);
+  animation: trail-fade 1s ease-out, rainbow-shift 2s ease-in-out infinite;
+}
+
+@keyframes rainbow-shift {
+  0% { filter: hue-rotate(0deg) blur(0.5px) drop-shadow(0 0 2px currentColor); }
+  50% { filter: hue-rotate(180deg) blur(0.3px) drop-shadow(0 0 4px currentColor); }
+  100% { filter: hue-rotate(360deg) blur(0.5px) drop-shadow(0 0 2px currentColor); }
+}
+
+/* Confetti physics */
+.confetti-particle {
+  animation: confetti-fall 2s ease-out, confetti-spin 1s linear infinite;
+}
+
+@keyframes confetti-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Special sparkle variants */
+.sparkle-particle:nth-child(2n) {
+  animation-delay: 0.1s;
+  animation-duration: 1.2s;
+}
+
+.sparkle-particle:nth-child(3n) {
+  animation-delay: 0.2s;
+  animation-duration: 0.8s;
+}
+
+/* Pop particle size variants */
+.pop-particle:nth-child(2n) {
+  animation-duration: 0.8s;
+}
+
+.pop-particle:nth-child(3n) {
+  animation-duration: 0.4s;
+}
+
+/* Enhanced visual effects for different particle types */
+.sparkle-particle {
+  filter: 
+    drop-shadow(0 0 3px currentColor)
+    drop-shadow(0 0 6px rgba(255, 255, 255, 0.8))
+    brightness(1.5);
+}
+
+.pop-particle {
+  filter: 
+    drop-shadow(0 0 2px currentColor)
+    drop-shadow(0 0 4px rgba(255, 255, 255, 0.6))
+    brightness(1.3);
+}
+
+.trail-particle {
+  filter: 
+    blur(0.5px)
+    drop-shadow(0 0 2px currentColor)
+    drop-shadow(0 0 4px rgba(255, 255, 255, 0.4))
+    brightness(1.4);
+}
+
+.confetti-particle {
+  filter: 
+    drop-shadow(0 0 1px currentColor)
+    drop-shadow(0 0 3px rgba(255, 255, 255, 0.5))
+    brightness(1.2);
+}
+
+/* Physics-specific animations */
+@keyframes physics-pulse {
+  0%, 100% { 
+    transform: scale(1);
+  }
+  50% { 
+    transform: scale(1.1);
+  }
+}
+
+/* Jiggle physics visual indicator */
+.physics-button.active .physics-icon:nth-child(1) {
+  animation: physics-pulse 1s ease-in-out infinite, jiggle-wobble 2s ease-in-out infinite;
+}
+
+@keyframes jiggle-wobble {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-3deg) scale(1.05); }
+  75% { transform: rotate(3deg) scale(1.05); }
+}
+
+/* Chain reaction visual indicator */
+.physics-button:nth-child(2).active .physics-icon {
+  animation: physics-pulse 1s ease-in-out infinite, chain-spark 1.5s ease-in-out infinite;
+}
+
+@keyframes chain-spark {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.5) drop-shadow(0 0 8px yellow); }
+}
+
+/* Gravity visual indicator */
+.physics-button:nth-child(3).active .physics-icon {
+  animation: physics-pulse 1s ease-in-out infinite, gravity-drop 2s ease-in-out infinite;
+}
+
+@keyframes gravity-drop {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(3px) scale(1.05); }
+}
+
+/* Bounce visual indicator */
+.physics-button:nth-child(4).active .physics-icon {
+  animation: physics-pulse 1s ease-in-out infinite, bounce-ball 1.2s ease-in-out infinite;
+}
+
+@keyframes bounce-ball {
+  0%, 100% { transform: translateY(0) scale(1); }
+  25% { transform: translateY(-5px) scale(0.95); }
+  50% { transform: translateY(0) scale(1.1); }
+  75% { transform: translateY(-2px) scale(0.98); }
+}
+
+/* Enhanced physics button effects */
+.physics-button.active {
+  position: relative;
+  overflow: visible;
+}
+
+.physics-button.active::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4, #FFEAA7, #DDA0DD);
+  background-size: 400%;
+  border-radius: 14px;
+  z-index: -1;
+  animation: physics-rainbow 3s ease infinite;
+}
+
+@keyframes physics-rainbow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
 } 
